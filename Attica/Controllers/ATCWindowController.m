@@ -23,27 +23,67 @@
 
 #import "ATCWindowController.h"
 
-@interface ATCWindowController ()
+static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR summary contains[cd] %@ OR shortcut contains[cd] %@)";
 
+@interface ATCWindowController()
+@property (nonatomic, strong) NSArray *snippetBindings;
 @end
 
 @implementation ATCWindowController
 
-- (id)initWithWindow:(NSWindow *)window
-{
-    self = [super initWithWindow:window];
+- (id)initWithBundle:(NSBundle *)bundle {
+    self = [super init];
     if (self) {
-        // Initialization code here.
+        self.filterPredicate = [NSPredicate predicateWithValue:YES];
+        self.contentsFont = [NSFont fontWithName:@"Menlo" size:14];
+        [self setWindow:[self mainWindowInBundle:bundle]];
+        self.snippetManager = [[ATCSnippetManager alloc] init];
+        self.snippetBindings = @[@"title",@"platform",@"language",@"summary",@"contents",@"shortcut"];
     }
-    
     return self;
 }
 
-- (void)windowDidLoad
-{
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+- (void)setSelectedSnippet:(ATCSnippet *)selectedSnippet {
+    if (_selectedSnippet != selectedSnippet) {
+        for (NSString *keyPath in self.snippetBindings) {
+            [_selectedSnippet removeObserver:self forKeyPath:keyPath];
+        }
+        _selectedSnippet = selectedSnippet;
+        for (NSString *keyPath in self.snippetBindings) {
+            [_selectedSnippet addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:NULL];
+        }
+    }
+}
+
+- (NSWindow *)mainWindowInBundle:(NSBundle *)bundle {
+    NSArray *nibElements;
+    [bundle loadNibNamed:@"MainWindow" owner:self topLevelObjects:&nibElements];
+    NSPredicate *windowPredicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [evaluatedObject class] == [NSWindow class];
+    }];
+
+    NSWindow *window = [nibElements filteredArrayUsingPredicate:windowPredicate][0];
+
+    return window;
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    NSTableView *tableView = [notification object];
+    self.selectedSnippet = [self.snippetManager.snippets filteredArrayUsingPredicate:self.filterPredicate][tableView.selectedRow];
+}
+
+- (void)controlTextDidChange:(NSNotification *)notification {
+    NSSearchField *searchField = [notification object];
+    NSString *searchText = searchField.stringValue;
+    if (searchText.length > 0) {
+        self.filterPredicate = [NSPredicate predicateWithFormat:SEARCH_PREDICATE_FORMAT, searchText, searchText, searchText];
+    } else {
+        self.filterPredicate = [NSPredicate predicateWithValue:YES];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    [self.selectedSnippet persistChanges];
 }
 
 @end

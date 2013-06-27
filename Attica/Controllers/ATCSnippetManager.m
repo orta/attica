@@ -25,7 +25,7 @@
 
 static NSString *SNIPPET_RELATIVE_DIRECTORY = @"Library/Developer/Xcode/UserData/CodeSnippets";
 static NSString *SNIPPET_EXTENSION = @"codesnippet";
-static dispatch_queue_t backgroundQueue = nil;
+//static dispatch_queue_t backgroundQueue = nil;
 
 @implementation ATCSnippetManager
 
@@ -115,17 +115,20 @@ static dispatch_queue_t backgroundQueue = nil;
 - (void)loadSnippets {
     self.snippets = [NSMutableArray new];
     @try {
-        NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:[self snippetDirectory].path];
+        NSString *path = [self snippetDirectory].path;
+        NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:path];
         NSString *directoryEntry;
 
         while (directoryEntry = [enumerator nextObject]) {
-            if ([directoryEntry hasSuffix:SNIPPET_EXTENSION])
-                [self.snippets addObject:[[ATCSnippet alloc] initWithPlistURL:[NSURL fileURLWithPath:directoryEntry]]];
+            if ([directoryEntry hasSuffix:SNIPPET_EXTENSION]) {
+                [self.snippets addObject:[[ATCSnippet alloc] initWithPlistURL:[NSURL fileURLWithPathComponents:@[path, directoryEntry]]]];
+            }
         }
     }
     @catch (NSException *exception) {
-        NSLog(@"Exception occurred while loading template files from clone: %@", exception);
+        NSLog(@"Exception occurred while loading snippets: %@", exception);
     }
+    NSLog(@"%ld Snippets Loaded.", (unsigned long)self.snippets.count);
 }
 
 - (ATCSnippet *)snippetByURL:(NSURL *)snippetURL {

@@ -22,7 +22,9 @@
 //  IN THE SOFTWARE.
 
 #import <AppKit/AppKit.h>
+#import "ATCWindowController.h"
 
 @interface Attica : NSObject
 
+@property (nonatomic, retain) ATCWindowController *windowController;
 @end

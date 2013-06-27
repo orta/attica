@@ -39,7 +39,8 @@
     self.title    = plist[@"IDECodeSnippetTitle"];
     self.uuid     = plist[@"IDECodeSnippetIdentifier"];
     self.platform = plist[@"IDECodeSnippetPlatform"];
-    self.language = plist[@"IDECodeSnippetLanguage"];
+    self.language = [((NSString *)plist[@"IDECodeSnippetLanguage"]) stringByReplacingOccurrencesOfString:@"Xcode.SourceCodeLanguage." withString:@""];
+    self.summary  = plist[@"IDECodeSnippetSummary"];
     self.contents = plist[@"IDECodeSnippetContents"];
     self.shortcut = plist[@"IDECodeSnippetCompletionPrefix"];
     self.scopes   = plist[@"IDECodeSnippetCompletionScopes"];
@@ -51,16 +52,21 @@
 
 - (NSDictionary *)propertyList {
     return @{
-        @"IDECodeSnippetTitle": self.title,
-        @"IDECodeSnippetIdentifier": self.uuid,
-        @"IDECodeSnippetPlatform": self.platform,
-        @"IDECodeSnippetLanguage": self.language,
-        @"IDECodeSnippetContents": self.contents,
-        @"IDECodeSnippetCompletionPrefix": self.shortcut,
-        @"IDECodeSnippetCompletionScopes": self.scopes,
-        @"IDECodeSnippetUserSnippet": YES,
+        @"IDECodeSnippetTitle": self.title?:@"",
+        @"IDECodeSnippetIdentifier": self.uuid?:@"",
+        @"IDECodeSnippetPlatform": self.platform?:@"",
+        @"IDECodeSnippetLanguage": [NSString stringWithFormat:@"Xcode.SourceCodeLanguage.%@", self.language],
+        @"IDECodeSnippetSummary": self.summary?:@"",
+        @"IDECodeSnippetContents": self.contents?:@"",
+        @"IDECodeSnippetCompletionPrefix": self.shortcut?:@"",
+        @"IDECodeSnippetCompletionScopes": self.scopes?:@[],
+        @"IDECodeSnippetUserSnippet": @YES,
         @"IDECodeSnippetVersion": @2
     };
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    NSLog(@"Keypath changes: %@ on: %@ dict: %@", keyPath, object, change);
 }
 
 @end

@@ -23,40 +23,48 @@
 
 #import "Attica.h"
 
-@implementation Attica
+@interface Attica(){}
+@property (nonatomic, strong) NSBundle *bundle;
+@end
 
+@implementation Attica
 
 + (void)pluginDidLoad:(NSBundle *)plugin
 {
     static id sharedPlugin = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedPlugin = [[self alloc] init];
+        sharedPlugin = [[self alloc] initWithBundle:plugin];
     });
 }
 
-- (id)init
+- (id)initWithBundle:(NSBundle *)bundle
 {
     if (self = [super init]) {
-        // Create menu items, initialize UI, etc.
-
-        // Sample Menu Item:
-        NSMenuItem *viewMenuItem = [[NSApp mainMenu] itemWithTitle:@"File"];
-        if (viewMenuItem) {
-            [[viewMenuItem submenu] addItem:[NSMenuItem separatorItem]];
-            NSMenuItem *sample = [[NSMenuItem alloc] initWithTitle:@"Do Action" action:@selector(doMenuAction) keyEquivalent:@""];
-            [sample setTarget:self];
-            [[viewMenuItem submenu] addItem:sample];
-        }
+        self.bundle = bundle;
+        [self createMenuItem];
     }
     return self;
 }
 
-// Sample Action, for menu item:
-- (void)doMenuAction
-{
-    NSAlert *alert = [NSAlert alertWithMessageText:@"Hello, World" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
-    [alert runModal];
+#pragma mark - Private
+
+- (void)createMenuItem {
+    NSMenuItem *windowMenuItem = [[NSApp mainMenu] itemWithTitle:@"Window"];
+    NSMenuItem *atticaMenuItem = [[NSMenuItem alloc] initWithTitle:@"Snippet Editor"
+                                                               action:@selector(openEditorWindow)
+                                                        keyEquivalent:@"8"];
+    atticaMenuItem.keyEquivalentModifierMask = NSCommandKeyMask | NSShiftKeyMask;
+    atticaMenuItem.target = self;
+    [windowMenuItem.submenu insertItem:atticaMenuItem
+                               atIndex:[windowMenuItem.submenu indexOfItemWithTitle:@"Organizer"] + 1];
+}
+
+- (void) openEditorWindow {
+    if (!self.windowController)
+        self.windowController = [[ATCWindowController alloc] initWithBundle:self.bundle];
+
+    [[self.windowController window] makeKeyAndOrderFront:self];
 }
 
 @end

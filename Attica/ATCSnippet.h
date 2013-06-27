@@ -28,6 +28,7 @@
 @property (nonatomic, strong) NSUUID *uuid;
 @property (nonatomic, strong) NSString *platform;
 @property (nonatomic, strong) NSString *language;
+@property (nonatomic, strong) NSString *summary;
 @property (nonatomic, strong) NSString *contents;
 @property (nonatomic, strong) NSString *shortcut;
 @property (nonatomic, strong) NSArray *scopes;

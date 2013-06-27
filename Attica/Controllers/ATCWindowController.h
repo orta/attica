@@ -22,8 +22,15 @@
 //  IN THE SOFTWARE.
 
 #import "ATCSnippetManager.h"
+#import "ATCSnippet.h"
 
-@interface ATCWindowController : NSWindowController
+@interface ATCWindowController : NSWindowController<NSTableViewDelegate, NSControlTextEditingDelegate>
 
 @property (nonatomic, strong) ATCSnippetManager *snippetManager;
+@property (nonatomic, strong) ATCSnippet *selectedSnippet;
+@property (nonatomic, strong) NSFont *contentsFont;
+@property (unsafe_unretained) IBOutlet NSTextView *contentsField;
+@property (nonatomic, retain) NSPredicate *filterPredicate;
+
+- (id)initWithBundle:(NSBundle *)bundle;
 @end
