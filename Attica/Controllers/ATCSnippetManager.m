@@ -24,6 +24,7 @@
 #import "ATCSnippetManager.h"
 
 static NSString *SNIPPET_RELATIVE_DIRECTORY = @"Library/Developer/Xcode/UserData/CodeSnippets";
+static NSString *SNIPPET_EXTENSION = @"codesnippet";
 static dispatch_queue_t backgroundQueue = nil;
 
 @implementation ATCSnippetManager
@@ -33,10 +34,10 @@ static dispatch_queue_t backgroundQueue = nil;
     if (self) {
         [self loadSnippets];
         [NSFileCoordinator addFilePresenter:self];
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            backgroundQueue = dispatch_queue_create("me.delisa.Attica.snippet-directory-watcher", DISPATCH_QUEUE_CONCURRENT);
-        });
+//        static dispatch_once_t onceToken;
+//        dispatch_once(&onceToken, ^{
+//            backgroundQueue = dispatch_queue_create("me.delisa.Attica.snippet-directory-watcher", DISPATCH_QUEUE_CONCURRENT);
+//        });
     }
     return self;
 }
@@ -46,13 +47,23 @@ static dispatch_queue_t backgroundQueue = nil;
 }
 
 - (ATCSnippet *)createSnippet {
-    // generate UUID
-    // generate stub plist
-    // write plist to disk
+    ATCSnippet *snippet = [[ATCSnippet alloc] init];
+    snippet.uuid    = [NSUUID UUID];
+    snippet.fileURL = [NSURL fileURLWithPathComponents:@[[self snippetDirectory].path, [snippet.uuid UUIDString]]];
+    [snippet persistChanges];
+    return snippet;
 }
 
 - (BOOL)deleteSnippet:(ATCSnippet *)snippet {
-    // delete snippet file from disk
+    NSError *error = nil;
+
+    [[NSFileManager defaultManager] removeItemAtPath:snippet.fileURL.path error:&error];
+    if (!error) {
+        [self.snippets removeObject:snippet];
+        return YES;
+    }
+    NSLog(@"Error deleting snippet: %@, %@", error, [error userInfo]);
+    return NO;
 }
 
 #pragma mark - NSFilePresenter methods
@@ -65,33 +76,61 @@ static dispatch_queue_t backgroundQueue = nil;
     return [NSOperationQueue mainQueue];
 }
 
-- (void)accommodatePresentedItemDeletionWithCompletionHandler:(void (^)(NSError *))completionHandler {
+- (void)accommodatePresentedSubitemDeletionAtURL:(NSURL *)url completionHandler:(void (^)(NSError *))completionHandler {
+    if (![self isSnippetURL:url]) return;
 
+    ATCSnippet *snippet = [self snippetByURL:url];
+    [self.snippets removeObject:snippet];
+    completionHandler(nil);
 }
 
 - (void)presentedSubitemDidAppearAtURL:(NSURL *)url {
-
+    if (![self isSnippetURL:url]) return;
+    
+    ATCSnippet *snippet = [[ATCSnippet alloc] initWithPlistURL:url];
+    [self.snippets addObject:snippet];
 }
 
 - (void)presentedSubitemDidChangeAtURL:(NSURL *)url {
-    
+    if (![self isSnippetURL:url]) return;
+
+    ATCSnippet *snippet = [self snippetByURL:url];
+    NSDictionary *plist = [NSDictionary dictionaryWithContentsOfFile:url.path];
+    [snippet updatePropertiesFromDictionary:plist];
 }
 
 - (void)presentedSubitemAtURL:(NSURL *)oldURL didMoveToURL:(NSURL *)newURL {
-    
+    if (![self isSnippetURL:oldURL]) return;
+
+    ATCSnippet *snippet = [self snippetByURL:oldURL];
+    snippet.fileURL = newURL;
 }
 
 #pragma mark - Private
 
-- (void)loadSnippets {
-    
+- (BOOL)isSnippetURL:(NSURL *)url {
+    return [[url.path pathExtension] isEqualToString:SNIPPET_EXTENSION];
 }
 
-- (ATCSnippet *)snippetByUUID:(NSString *) snippetIdentifier {
-    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:snippetIdentifier];
+- (void)loadSnippets {
+    self.snippets = [NSMutableArray new];
+    @try {
+        NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:[self snippetDirectory].path];
+        NSString *directoryEntry;
 
+        while (directoryEntry = [enumerator nextObject]) {
+            if ([directoryEntry hasSuffix:SNIPPET_EXTENSION])
+                [self.snippets addObject:[[ATCSnippet alloc] initWithPlistURL:[NSURL fileURLWithPath:directoryEntry]]];
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception occurred while loading template files from clone: %@", exception);
+    }
+}
+
+- (ATCSnippet *)snippetByURL:(NSURL *)snippetURL {
     for (ATCSnippet *snippet in self.snippets) {
-        if ([snippet.uuid isEqual:uuid]) {
+        if ([snippet.fileURL isEqual:snippetURL]) {
             return snippet;
         }
     }

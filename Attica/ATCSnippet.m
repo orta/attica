@@ -25,4 +25,42 @@
 
 @implementation ATCSnippet
 
+- (id)initWithPlistURL:(NSURL *)plistURL {
+    self = [super init];
+    if (self) {
+        self.fileURL = plistURL;
+        NSDictionary *plist = [NSDictionary dictionaryWithContentsOfFile:plistURL.path];
+        [self updatePropertiesFromDictionary:plist];
+    }
+    return self;
+}
+
+- (void) updatePropertiesFromDictionary:(NSDictionary *)plist {
+    self.title    = plist[@"IDECodeSnippetTitle"];
+    self.uuid     = plist[@"IDECodeSnippetIdentifier"];
+    self.platform = plist[@"IDECodeSnippetPlatform"];
+    self.language = plist[@"IDECodeSnippetLanguage"];
+    self.contents = plist[@"IDECodeSnippetContents"];
+    self.shortcut = plist[@"IDECodeSnippetCompletionPrefix"];
+    self.scopes   = plist[@"IDECodeSnippetCompletionScopes"];
+}
+
+- (BOOL) persistChanges {
+    return [[self propertyList] writeToFile:self.fileURL.path atomically:YES];
+}
+
+- (NSDictionary *)propertyList {
+    return @{
+        @"IDECodeSnippetTitle": self.title,
+        @"IDECodeSnippetIdentifier": self.uuid,
+        @"IDECodeSnippetPlatform": self.platform,
+        @"IDECodeSnippetLanguage": self.language,
+        @"IDECodeSnippetContents": self.contents,
+        @"IDECodeSnippetCompletionPrefix": self.shortcut,
+        @"IDECodeSnippetCompletionScopes": self.scopes,
+        @"IDECodeSnippetUserSnippet": YES,
+        @"IDECodeSnippetVersion": @2
+    };
+}
+
 @end
