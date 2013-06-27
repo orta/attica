@@ -11,6 +11,12 @@
 		8A84707D177C7FA300FF1513 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A84707C177C7FA300FF1513 /* Foundation.framework */; };
 		8A847083177C7FA300FF1513 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A847081177C7FA300FF1513 /* InfoPlist.strings */; };
 		8A847086177C7FA300FF1513 /* Attica.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A847085177C7FA300FF1513 /* Attica.m */; };
+		8A84708E177C7FFB00FF1513 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A84708D177C7FFB00FF1513 /* MainWindow.xib */; };
+		8A847092177C8F1C00FF1513 /* ATCSnippet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A847091177C8F1C00FF1513 /* ATCSnippet.m */; };
+		8A847096177C962F00FF1513 /* snippet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A847094177C962F00FF1513 /* snippet@2x.png */; };
+		8A847097177C962F00FF1513 /* snippet.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A847095177C962F00FF1513 /* snippet.png */; };
+		8A84709A177C99FB00FF1513 /* ATCWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A847099177C99FB00FF1513 /* ATCWindowController.m */; };
+		8A84709E177C9BBF00FF1513 /* ATCSnippetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A84709D177C9BBF00FF1513 /* ATCSnippetManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +28,15 @@
 		8A847084177C7FA300FF1513 /* Attica.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Attica.h; sourceTree = "<group>"; };
 		8A847085177C7FA300FF1513 /* Attica.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Attica.m; sourceTree = "<group>"; };
 		8A847087177C7FA300FF1513 /* Attica-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Attica-Prefix.pch"; sourceTree = "<group>"; };
+		8A84708D177C7FFB00FF1513 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		8A847090177C8F1C00FF1513 /* ATCSnippet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATCSnippet.h; sourceTree = "<group>"; };
+		8A847091177C8F1C00FF1513 /* ATCSnippet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATCSnippet.m; sourceTree = "<group>"; };
+		8A847094177C962F00FF1513 /* snippet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "snippet@2x.png"; sourceTree = "<group>"; };
+		8A847095177C962F00FF1513 /* snippet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snippet.png; sourceTree = "<group>"; };
+		8A847098177C99FB00FF1513 /* ATCWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATCWindowController.h; path = Controllers/ATCWindowController.h; sourceTree = "<group>"; };
+		8A847099177C99FB00FF1513 /* ATCWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATCWindowController.m; path = Controllers/ATCWindowController.m; sourceTree = "<group>"; };
+		8A84709C177C9BBF00FF1513 /* ATCSnippetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATCSnippetManager.h; path = Controllers/ATCSnippetManager.h; sourceTree = "<group>"; };
+		8A84709D177C9BBF00FF1513 /* ATCSnippetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATCSnippetManager.m; path = Controllers/ATCSnippetManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +81,12 @@
 		8A84707E177C7FA300FF1513 /* Attica */ = {
 			isa = PBXGroup;
 			children = (
+				8A84709B177C99FF00FF1513 /* Controllers */,
+				8A847093177C958300FF1513 /* Assets */,
+				8A84708F177C8F0200FF1513 /* Models */,
 				8A847084177C7FA300FF1513 /* Attica.h */,
 				8A847085177C7FA300FF1513 /* Attica.m */,
+				8A84708D177C7FFB00FF1513 /* MainWindow.xib */,
 				8A84707F177C7FA300FF1513 /* Supporting Files */,
 			);
 			path = Attica;
@@ -81,6 +100,35 @@
 				8A847087177C7FA300FF1513 /* Attica-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8A84708F177C8F0200FF1513 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8A847090177C8F1C00FF1513 /* ATCSnippet.h */,
+				8A847091177C8F1C00FF1513 /* ATCSnippet.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		8A847093177C958300FF1513 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				8A847094177C962F00FF1513 /* snippet@2x.png */,
+				8A847095177C962F00FF1513 /* snippet.png */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		8A84709B177C99FF00FF1513 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8A847098177C99FB00FF1513 /* ATCWindowController.h */,
+				8A847099177C99FB00FF1513 /* ATCWindowController.m */,
+				8A84709C177C9BBF00FF1513 /* ATCSnippetManager.h */,
+				8A84709D177C9BBF00FF1513 /* ATCSnippetManager.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,6 +183,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A847083177C7FA300FF1513 /* InfoPlist.strings in Resources */,
+				8A84708E177C7FFB00FF1513 /* MainWindow.xib in Resources */,
+				8A847096177C962F00FF1513 /* snippet@2x.png in Resources */,
+				8A847097177C962F00FF1513 /* snippet.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +197,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A847086177C7FA300FF1513 /* Attica.m in Sources */,
+				8A847092177C8F1C00FF1513 /* ATCSnippet.m in Sources */,
+				8A84709A177C99FB00FF1513 /* ATCWindowController.m in Sources */,
+				8A84709E177C9BBF00FF1513 /* ATCSnippetManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +277,7 @@
 		8A84708B177C7FA300FF1513 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
@@ -239,6 +294,7 @@
 		8A84708C177C7FA300FF1513 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
