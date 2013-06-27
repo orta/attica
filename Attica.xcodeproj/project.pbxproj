@@ -1,0 +1,278 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8A84707B177C7FA300FF1513 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A84707A177C7FA300FF1513 /* AppKit.framework */; };
+		8A84707D177C7FA300FF1513 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A84707C177C7FA300FF1513 /* Foundation.framework */; };
+		8A847083177C7FA300FF1513 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A847081177C7FA300FF1513 /* InfoPlist.strings */; };
+		8A847086177C7FA300FF1513 /* Attica.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A847085177C7FA300FF1513 /* Attica.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8A847077177C7FA300FF1513 /* Attica.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Attica.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A84707A177C7FA300FF1513 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		8A84707C177C7FA300FF1513 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8A847080177C7FA300FF1513 /* Attica-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Attica-Info.plist"; sourceTree = "<group>"; };
+		8A847082177C7FA300FF1513 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8A847084177C7FA300FF1513 /* Attica.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Attica.h; sourceTree = "<group>"; };
+		8A847085177C7FA300FF1513 /* Attica.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Attica.m; sourceTree = "<group>"; };
+		8A847087177C7FA300FF1513 /* Attica-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Attica-Prefix.pch"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8A847074177C7FA300FF1513 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A84707B177C7FA300FF1513 /* AppKit.framework in Frameworks */,
+				8A84707D177C7FA300FF1513 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8A84706E177C7FA300FF1513 = {
+			isa = PBXGroup;
+			children = (
+				8A84707E177C7FA300FF1513 /* Attica */,
+				8A847079177C7FA300FF1513 /* Frameworks */,
+				8A847078177C7FA300FF1513 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8A847078177C7FA300FF1513 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8A847077177C7FA300FF1513 /* Attica.xcplugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8A847079177C7FA300FF1513 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8A84707A177C7FA300FF1513 /* AppKit.framework */,
+				8A84707C177C7FA300FF1513 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8A84707E177C7FA300FF1513 /* Attica */ = {
+			isa = PBXGroup;
+			children = (
+				8A847084177C7FA300FF1513 /* Attica.h */,
+				8A847085177C7FA300FF1513 /* Attica.m */,
+				8A84707F177C7FA300FF1513 /* Supporting Files */,
+			);
+			path = Attica;
+			sourceTree = "<group>";
+		};
+		8A84707F177C7FA300FF1513 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8A847080177C7FA300FF1513 /* Attica-Info.plist */,
+				8A847081177C7FA300FF1513 /* InfoPlist.strings */,
+				8A847087177C7FA300FF1513 /* Attica-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8A847076177C7FA300FF1513 /* Attica */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A84708A177C7FA300FF1513 /* Build configuration list for PBXNativeTarget "Attica" */;
+			buildPhases = (
+				8A847073177C7FA300FF1513 /* Sources */,
+				8A847074177C7FA300FF1513 /* Frameworks */,
+				8A847075177C7FA300FF1513 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Attica;
+			productName = Attica;
+			productReference = 8A847077177C7FA300FF1513 /* Attica.xcplugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8A84706F177C7FA300FF1513 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Delisa Mason";
+			};
+			buildConfigurationList = 8A847072177C7FA300FF1513 /* Build configuration list for PBXProject "Attica" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8A84706E177C7FA300FF1513;
+			productRefGroup = 8A847078177C7FA300FF1513 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8A847076177C7FA300FF1513 /* Attica */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8A847075177C7FA300FF1513 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A847083177C7FA300FF1513 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8A847073177C7FA300FF1513 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A847086177C7FA300FF1513 /* Attica.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8A847081177C7FA300FF1513 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8A847082177C7FA300FF1513 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8A847088177C7FA300FF1513 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		8A847089177C7FA300FF1513 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		8A84708B177C7FA300FF1513 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Attica/Attica-Prefix.pch";
+				INFOPLIST_FILE = "Attica/Attica-Info.plist";
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Debug;
+		};
+		8A84708C177C7FA300FF1513 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Attica/Attica-Prefix.pch";
+				INFOPLIST_FILE = "Attica/Attica-Info.plist";
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8A847072177C7FA300FF1513 /* Build configuration list for PBXProject "Attica" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A847088177C7FA300FF1513 /* Debug */,
+				8A847089177C7FA300FF1513 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A84708A177C7FA300FF1513 /* Build configuration list for PBXNativeTarget "Attica" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A84708B177C7FA300FF1513 /* Debug */,
+				8A84708C177C7FA300FF1513 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8A84706F177C7FA300FF1513 /* Project object */;
+}
