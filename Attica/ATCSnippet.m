@@ -65,4 +65,8 @@
     };
 }
 
++ (NSSet *) keyPathsForValuesAffectingUuid {
+    return [NSSet setWithObjects:@"title",@"platform",@"language",@"summary",@"contents",@"shortcut", nil];
+}
+
 @end

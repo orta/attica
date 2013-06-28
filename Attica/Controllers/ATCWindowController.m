@@ -27,7 +27,6 @@ static int SnippetKVOContext;
 static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR summary contains[cd] %@ OR shortcut contains[cd] %@)";
 
 @interface ATCWindowController()
-@property (nonatomic, strong) NSArray *snippetBindings;
 @end
 
 @implementation ATCWindowController
@@ -40,7 +39,6 @@ static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR sum
         self.contentsFont = [NSFont fontWithName:@"Menlo" size:14];
         [self setWindow:[self mainWindowInBundle:bundle]];
         self.snippetManager = [[ATCSnippetManager alloc] init];
-        self.snippetBindings = @[@"title",@"platform",@"language",@"summary",@"contents",@"shortcut"];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(snippetWillBeDeleted:) name:@"me.delisa.Attica.snippet-deletion" object:nil];
     }
     return self;
@@ -56,10 +54,10 @@ static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR sum
 
 - (void)setSelectedSnippet:(ATCSnippet *)selectedSnippet {
     if (_selectedSnippet != selectedSnippet) {
-        [self removeObserversOnSnippet:_selectedSnippet];
+        [_selectedSnippet removeObserver:self forKeyPath:@"uuid" context:&SnippetKVOContext];
 
         _selectedSnippet = selectedSnippet;
-        [self addObserversOnSnippet:_selectedSnippet];
+        [_selectedSnippet addObserver:self forKeyPath:@"uuid" options:0 context:&SnippetKVOContext];
     }
 }
 
@@ -83,19 +81,7 @@ static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR sum
 - (void) snippetWillBeDeleted:(NSNotification *)notification {
     ATCSnippet *doomedSnippet = [notification object];
     if (doomedSnippet == self.selectedSnippet) {
-        [self removeObserversOnSnippet:doomedSnippet];
-    }
-}
-
-- (void) removeObserversOnSnippet:(ATCSnippet *)snippet {
-    for (NSString *keyPath in self.snippetBindings) {
-        [snippet removeObserver:self forKeyPath:keyPath context:&SnippetKVOContext];
-    }
-}
-
-- (void)addObserversOnSnippet:(ATCSnippet *)snippet {
-    for (NSString *keyPath in self.snippetBindings) {
-        [snippet addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:&SnippetKVOContext];
+        [doomedSnippet removeObserver:self forKeyPath:@"uuid" context:&SnippetKVOContext];
     }
 }
 

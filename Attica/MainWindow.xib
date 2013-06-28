@@ -245,7 +245,7 @@
 											<array class="NSMutableArray" key="NSSubviews">
 												<object class="NSClipView" id="876807252">
 													<reference key="NSNextResponder" ref="933509285"/>
-													<int key="NSvFlags">2304</int>
+													<int key="NSvFlags">2322</int>
 													<array class="NSMutableArray" key="NSSubviews">
 														<object class="NSTableView" id="645639527">
 															<reference key="NSNextResponder" ref="876807252"/>
@@ -408,6 +408,7 @@
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="933509285"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
+									<bool key="NSDoNotTranslateAutoresizingMask">YES</bool>
 									<string key="NSClassName">NSView</string>
 								</object>
 								<object class="NSCustomView" id="318190044">
@@ -647,7 +648,7 @@
 															<array class="NSMutableArray" key="NSSubviews">
 																<object class="NSClipView" id="100571201">
 																	<reference key="NSNextResponder" ref="632876945"/>
-																	<int key="NSvFlags">2304</int>
+																	<int key="NSvFlags">2322</int>
 																	<array class="NSMutableArray" key="NSSubviews">
 																		<object class="NSTextView" id="746209728">
 																			<reference key="NSNextResponder" ref="100571201"/>
@@ -1064,6 +1065,7 @@
 															</object>
 															<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 															<bool key="NSControlAutosetMaxLayoutWidth">YES</bool>
+															<double key="NSPreferredMaxLayoutWidth">411</double>
 														</object>
 													</array>
 													<string key="NSFrame">{{1, 1}, {447, 378}}</string>
@@ -1102,6 +1104,7 @@
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="115451172"/>
 									<string key="NSReuseIdentifierKey">_NS:13</string>
+									<bool key="NSDoNotTranslateAutoresizingMask">YES</bool>
 									<string key="NSClassName">NSView</string>
 								</object>
 							</array>
@@ -1141,7 +1144,7 @@
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="574957271"/>
 					</object>
-					<int key="connectionID">697</int>
+					<int key="connectionID">737</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1242,11 +1245,7 @@
 										<int key="NSCellFlags">603979776</int>
 										<int key="NSCellFlags2">272633856</int>
 										<string key="NSContents">Multiline Label</string>
-										<object class="NSFont" key="NSSupport">
-											<string key="NSName">LucidaGrande</string>
-											<double key="NSSize">11</double>
-											<int key="NSfFlags">16</int>
-										</object>
+										<reference key="NSSupport" ref="26"/>
 										<string key="NSCellIdentifier">_NS:9</string>
 										<reference key="NSControlView" ref="593946017"/>
 										<reference key="NSBackgroundColor" ref="512263274"/>
@@ -1262,6 +1261,7 @@
 									</object>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<bool key="NSControlAutosetMaxLayoutWidth">YES</bool>
+									<double key="NSPreferredMaxLayoutWidth">123</double>
 								</object>
 							</array>
 							<string key="NSFrame">{{1, 1}, {180, 64}}</string>
@@ -1317,7 +1317,7 @@
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">700</int>
+					<int key="connectionID">735</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1330,10 +1330,14 @@
 							<string key="NSLabel">value: self.selectedSnippet.title</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">self.selectedSnippet.title</string>
+							<dictionary key="NSOptions">
+								<boolean value="NO" key="NSAllowsEditingMultipleValuesSelection"/>
+								<boolean value="NO" key="NSConditionallySetsEditable"/>
+							</dictionary>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">649</int>
+					<int key="connectionID">726</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1349,7 +1353,7 @@
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">650</int>
+					<int key="connectionID">729</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1369,6 +1373,22 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.shortcut</string>
+						<reference key="source" ref="167762466"/>
+						<reference key="destination" ref="867815239"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="167762466"/>
+							<reference key="NSDestination" ref="867815239"/>
+							<string key="NSLabel">value: selection.shortcut</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.shortcut</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">720</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: self.selectedSnippet.platform</string>
 						<reference key="source" ref="608706342"/>
 						<reference key="destination" ref="1001"/>
@@ -1381,7 +1401,7 @@
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">652</int>
+					<int key="connectionID">731</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1397,7 +1417,7 @@
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">651</int>
+					<int key="connectionID">733</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -4089,7 +4109,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">709</int>
+			<int key="maxID">737</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4110,17 +4130,6 @@
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">contentsField</string>
-						<string key="NS.object.0">NSTextView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">contentsField</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">contentsField</string>
-							<string key="candidateClassName">NSTextView</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/ATCWindowController.h</string>
@@ -4138,6 +4147,10 @@
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
+			<integer value="4600" key="NS.object.0"/>
+		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
