@@ -23,6 +23,7 @@
 
 #import "ATCWindowController.h"
 
+static int SnippetKVOContext;
 static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR summary contains[cd] %@ OR shortcut contains[cd] %@)";
 
 @interface ATCWindowController()
@@ -35,41 +36,36 @@ static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR sum
     self = [super init];
     if (self) {
         self.filterPredicate = [NSPredicate predicateWithValue:YES];
+        self.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
         self.contentsFont = [NSFont fontWithName:@"Menlo" size:14];
         [self setWindow:[self mainWindowInBundle:bundle]];
         self.snippetManager = [[ATCSnippetManager alloc] init];
         self.snippetBindings = @[@"title",@"platform",@"language",@"summary",@"contents",@"shortcut"];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(snippetWillBeDeleted:) name:@"me.delisa.Attica.snippet-deletion" object:nil];
     }
     return self;
 }
 
-- (void)setSelectedSnippet:(ATCSnippet *)selectedSnippet {
-    if (_selectedSnippet != selectedSnippet) {
-        for (NSString *keyPath in self.snippetBindings) {
-            [_selectedSnippet removeObserver:self forKeyPath:keyPath];
-        }
-        _selectedSnippet = selectedSnippet;
-        for (NSString *keyPath in self.snippetBindings) {
-            [_selectedSnippet addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:NULL];
-        }
-    }
+- (IBAction)addSnippet:(id)sender {
+    self.selectedSnippet = [self.snippetManager createSnippet];
 }
 
-- (NSWindow *)mainWindowInBundle:(NSBundle *)bundle {
-    NSArray *nibElements;
-    [bundle loadNibNamed:@"MainWindow" owner:self topLevelObjects:&nibElements];
-    NSPredicate *windowPredicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [evaluatedObject class] == [NSWindow class];
-    }];
+- (IBAction)deleteSelectedSnippet:(id)sender {
+    [self.snippetManager deleteSnippet:self.selectedSnippet];
+}
 
-    NSWindow *window = [nibElements filteredArrayUsingPredicate:windowPredicate][0];
+- (void)setSelectedSnippet:(ATCSnippet *)selectedSnippet {
+    if (_selectedSnippet != selectedSnippet) {
+        [self removeObserversOnSnippet:_selectedSnippet];
 
-    return window;
+        _selectedSnippet = selectedSnippet;
+        [self addObserversOnSnippet:_selectedSnippet];
+    }
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
     NSTableView *tableView = [notification object];
-    self.selectedSnippet = [self.snippetManager.snippets filteredArrayUsingPredicate:self.filterPredicate][tableView.selectedRow];
+    self.selectedSnippet = [[self.snippetManager.snippets filteredArrayUsingPredicate:self.filterPredicate] sortedArrayUsingDescriptors:self.sortDescriptors][tableView.selectedRow];
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification {
@@ -82,8 +78,39 @@ static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR sum
     }
 }
 
+#pragma mark - Private
+
+- (void) snippetWillBeDeleted:(NSNotification *)notification {
+    ATCSnippet *doomedSnippet = [notification object];
+    if (doomedSnippet == self.selectedSnippet) {
+        [self removeObserversOnSnippet:doomedSnippet];
+    }
+}
+
+- (void) removeObserversOnSnippet:(ATCSnippet *)snippet {
+    for (NSString *keyPath in self.snippetBindings) {
+        [snippet removeObserver:self forKeyPath:keyPath context:&SnippetKVOContext];
+    }
+}
+
+- (void)addObserversOnSnippet:(ATCSnippet *)snippet {
+    for (NSString *keyPath in self.snippetBindings) {
+        [snippet addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:&SnippetKVOContext];
+    }
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    [self.selectedSnippet persistChanges];
+    [(ATCSnippet *)object persistChanges];
+}
+
+- (NSWindow *)mainWindowInBundle:(NSBundle *)bundle {
+    NSArray *nibElements;
+    [bundle loadNibNamed:@"MainWindow" owner:self topLevelObjects:&nibElements];
+    NSPredicate *windowPredicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [evaluatedObject class] == [NSWindow class];
+    }];
+
+    return [nibElements filteredArrayUsingPredicate:windowPredicate][0];
 }
 
 @end

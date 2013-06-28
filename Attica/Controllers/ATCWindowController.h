@@ -29,8 +29,11 @@
 @property (nonatomic, strong) ATCSnippetManager *snippetManager;
 @property (nonatomic, strong) ATCSnippet *selectedSnippet;
 @property (nonatomic, strong) NSFont *contentsFont;
-@property (unsafe_unretained) IBOutlet NSTextView *contentsField;
 @property (nonatomic, retain) NSPredicate *filterPredicate;
+@property (nonatomic, retain) NSArray *sortDescriptors;
 
 - (id)initWithBundle:(NSBundle *)bundle;
+- (IBAction)addSnippet:(id)sender;
+- (IBAction)deleteSelectedSnippet:(id)sender;
+
 @end

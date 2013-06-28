@@ -65,8 +65,4 @@
     };
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    NSLog(@"Keypath changes: %@ on: %@ dict: %@", keyPath, object, change);
-}
-
 @end

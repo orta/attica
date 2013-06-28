@@ -49,8 +49,8 @@ static NSString *SNIPPET_EXTENSION = @"codesnippet";
 - (ATCSnippet *)createSnippet {
     ATCSnippet *snippet = [[ATCSnippet alloc] init];
     snippet.uuid    = [NSUUID UUID];
+    snippet.title   = @"Untitled snippet";
     snippet.fileURL = [NSURL fileURLWithPathComponents:@[[self snippetDirectory].path, [snippet.uuid UUIDString]]];
-    [snippet persistChanges];
     return snippet;
 }
 
@@ -59,7 +59,8 @@ static NSString *SNIPPET_EXTENSION = @"codesnippet";
 
     [[NSFileManager defaultManager] removeItemAtPath:snippet.fileURL.path error:&error];
     if (!error) {
-        [self.snippets removeObject:snippet];
+        NSLog(@"Removing snippet %@ if its in list (%d)", snippet, [self.snippets containsObject:snippet]);
+        [self.snippets removeObjectIdenticalTo:snippet];
         return YES;
     }
     NSLog(@"Error deleting snippet: %@, %@", error, [error userInfo]);
@@ -77,16 +78,19 @@ static NSString *SNIPPET_EXTENSION = @"codesnippet";
 }
 
 - (void)accommodatePresentedSubitemDeletionAtURL:(NSURL *)url completionHandler:(void (^)(NSError *))completionHandler {
+    NSLog(@"Deleting snippet at %@", url.path);
     if (![self isSnippetURL:url]) return;
 
     ATCSnippet *snippet = [self snippetByURL:url];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"me.delisa.Attica.snippet-deletion" object:snippet];
     [self.snippets removeObject:snippet];
     completionHandler(nil);
 }
 
 - (void)presentedSubitemDidAppearAtURL:(NSURL *)url {
     if (![self isSnippetURL:url]) return;
-    
+
+    NSLog(@"Adding snippet at %@", url.path);
     ATCSnippet *snippet = [[ATCSnippet alloc] initWithPlistURL:url];
     [self.snippets addObject:snippet];
 }
@@ -94,9 +98,19 @@ static NSString *SNIPPET_EXTENSION = @"codesnippet";
 - (void)presentedSubitemDidChangeAtURL:(NSURL *)url {
     if (![self isSnippetURL:url]) return;
 
+    NSLog(@"Updating snippet at %@", url.path);
     ATCSnippet *snippet = [self snippetByURL:url];
-    NSDictionary *plist = [NSDictionary dictionaryWithContentsOfFile:url.path];
-    [snippet updatePropertiesFromDictionary:plist];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+        NSDictionary *plist = [NSDictionary dictionaryWithContentsOfFile:url.path];
+        if (snippet) {
+            [snippet updatePropertiesFromDictionary:plist];
+        } else {
+            snippet = [[ATCSnippet alloc] initWithPlistURL:url];
+            [self.snippets addObject:snippet];
+        }
+    } else {
+        [self.snippets removeObject:snippet];
+    }
 }
 
 - (void)presentedSubitemAtURL:(NSURL *)oldURL didMoveToURL:(NSURL *)newURL {
