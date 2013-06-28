@@ -25,7 +25,6 @@
 
 static NSString *SNIPPET_RELATIVE_DIRECTORY = @"Library/Developer/Xcode/UserData/CodeSnippets";
 static NSString *SNIPPET_EXTENSION = @"codesnippet";
-//static dispatch_queue_t backgroundQueue = nil;
 
 @implementation ATCSnippetManager
 
@@ -34,10 +33,6 @@ static NSString *SNIPPET_EXTENSION = @"codesnippet";
     if (self) {
         [self loadSnippets];
         [NSFileCoordinator addFilePresenter:self];
-//        static dispatch_once_t onceToken;
-//        dispatch_once(&onceToken, ^{
-//            backgroundQueue = dispatch_queue_create("me.delisa.Attica.snippet-directory-watcher", DISPATCH_QUEUE_CONCURRENT);
-//        });
     }
     return self;
 }
@@ -48,9 +43,11 @@ static NSString *SNIPPET_EXTENSION = @"codesnippet";
 
 - (ATCSnippet *)createSnippet {
     ATCSnippet *snippet = [[ATCSnippet alloc] init];
-    snippet.uuid    = [NSUUID UUID];
-    snippet.title   = @"Untitled snippet";
-    snippet.fileURL = [NSURL fileURLWithPathComponents:@[[self snippetDirectory].path, [snippet.uuid UUIDString]]];
+    snippet.uuid     = [NSUUID UUID];
+    snippet.title    = @"Untitled snippet";
+    snippet.summary  = @"A snippet of some kind";
+    snippet.shortcut = @"zzzz";
+    snippet.fileURL  = [NSURL fileURLWithPathComponents:@[[self snippetDirectory].path, [NSString stringWithFormat:@"%@.codesnippet", [snippet.uuid UUIDString]]]];
     return snippet;
 }
 
@@ -58,11 +55,9 @@ static NSString *SNIPPET_EXTENSION = @"codesnippet";
     NSError *error = nil;
 
     [[NSFileManager defaultManager] removeItemAtPath:snippet.fileURL.path error:&error];
-    if (!error) {
-        NSLog(@"Removing snippet %@ if its in list (%d)", snippet, [self.snippets containsObject:snippet]);
-        [self.snippets removeObjectIdenticalTo:snippet];
-        return YES;
-    }
+
+    if (!error) return YES;
+    
     NSLog(@"Error deleting snippet: %@, %@", error, [error userInfo]);
     return NO;
 }
@@ -146,10 +141,12 @@ static NSString *SNIPPET_EXTENSION = @"codesnippet";
 }
 
 - (ATCSnippet *)snippetByURL:(NSURL *)snippetURL {
-    for (ATCSnippet *snippet in self.snippets) {
-        if ([snippet.fileURL isEqual:snippetURL]) {
-            return snippet;
-        }
+    NSIndexSet *indices = [self.snippets indexesOfObjectsPassingTest:^BOOL(ATCSnippet *snippet, NSUInteger idx, BOOL *stop) {
+        return  [snippet.fileURL isEqual:snippetURL];
+    }];
+
+    if (indices.count > 0) {
+        return self.snippets[[indices firstIndex]];
     }
     return nil;
 }

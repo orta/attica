@@ -46,10 +46,13 @@ static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR sum
 
 - (IBAction)addSnippet:(id)sender {
     self.selectedSnippet = [self.snippetManager createSnippet];
+    [self.arrayController insertObject:self.selectedSnippet atArrangedObjectIndex:0];
+    self.arrayController.selectionIndexes = [NSIndexSet indexSetWithIndex:0];
 }
 
 - (IBAction)deleteSelectedSnippet:(id)sender {
-    [self.snippetManager deleteSnippet:self.selectedSnippet];
+    if ([self.snippetManager deleteSnippet:self.selectedSnippet])
+        [self.arrayController removeObject:self.selectedSnippet];
 }
 
 - (void)setSelectedSnippet:(ATCSnippet *)selectedSnippet {
@@ -82,6 +85,7 @@ static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR sum
     ATCSnippet *doomedSnippet = [notification object];
     if (doomedSnippet == self.selectedSnippet) {
         [doomedSnippet removeObserver:self forKeyPath:@"uuid" context:&SnippetKVOContext];
+        self.selectedSnippet = nil;
     }
 }
 

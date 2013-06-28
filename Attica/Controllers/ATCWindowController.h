@@ -31,6 +31,7 @@
 @property (nonatomic, strong) NSFont *contentsFont;
 @property (nonatomic, retain) NSPredicate *filterPredicate;
 @property (nonatomic, retain) NSArray *sortDescriptors;
+@property (strong) IBOutlet NSArrayController *arrayController;
 
 - (id)initWithBundle:(NSBundle *)bundle;
 - (IBAction)addSnippet:(id)sender;
