@@ -1,5 +1,5 @@
 //
-//  Snippet.m
+//  ATCSnippet.m
 //
 //  Copyright (c) 2013 Delisa Mason. http://delisa.me
 //
@@ -39,6 +39,7 @@
     self.title    = plist[@"IDECodeSnippetTitle"];
     self.uuid     = plist[@"IDECodeSnippetIdentifier"];
     self.platform = plist[@"IDECodeSnippetPlatform"];
+    if (!self.platform) self.platform = @"All";
     self.language = [((NSString *)plist[@"IDECodeSnippetLanguage"]) stringByReplacingOccurrencesOfString:@"Xcode.SourceCodeLanguage." withString:@""];
     self.summary  = plist[@"IDECodeSnippetSummary"];
     self.contents = plist[@"IDECodeSnippetContents"];
@@ -47,11 +48,14 @@
 }
 
 - (BOOL) persistChanges {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if (![fm fileExistsAtPath:self.fileURL.path])
+        [fm createFileAtPath:self.fileURL.path contents:nil attributes:nil];
     return [[self propertyList] writeToFile:self.fileURL.path atomically:YES];
 }
 
 - (NSDictionary *)propertyList {
-    return @{
+    NSMutableDictionary *properties = @{
         @"IDECodeSnippetTitle": self.title?:@"",
         @"IDECodeSnippetIdentifier": self.uuid?:@"",
         @"IDECodeSnippetPlatform": self.platform?:@"",
@@ -62,7 +66,13 @@
         @"IDECodeSnippetCompletionScopes": self.scopes?:@[],
         @"IDECodeSnippetUserSnippet": @YES,
         @"IDECodeSnippetVersion": @2
-    };
+    }.mutableCopy;
+
+    if (self.platform && ![self.platform isEqual:@"All"]) {
+        properties[@"IDECodeSnippetPlatform"] = self.platform;
+    }
+
+    return properties;
 }
 
 + (NSSet *) keyPathsForValuesAffectingUuid {
