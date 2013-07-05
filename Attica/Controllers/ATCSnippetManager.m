@@ -45,8 +45,6 @@ static NSString *SNIPPET_EXTENSION = @"codesnippet";
     ATCSnippet *snippet = [[ATCSnippet alloc] init];
     snippet.uuid     = [NSUUID UUID];
     snippet.title    = @"Untitled snippet";
-    snippet.summary  = @"A snippet of some kind";
-    snippet.shortcut = @"zzzz";
     snippet.fileURL  = [NSURL fileURLWithPathComponents:@[[self snippetDirectory].path, [NSString stringWithFormat:@"%@.codesnippet", [snippet.uuid UUIDString]]]];
     return snippet;
 }

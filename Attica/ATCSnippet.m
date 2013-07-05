@@ -35,7 +35,7 @@
     return self;
 }
 
-- (void) updatePropertiesFromDictionary:(NSDictionary *)plist {
+- (void)updatePropertiesFromDictionary:(NSDictionary *)plist {
     self.title    = plist[@"IDECodeSnippetTitle"];
     self.uuid     = plist[@"IDECodeSnippetIdentifier"];
     self.platform = plist[@"IDECodeSnippetPlatform"];
@@ -47,11 +47,18 @@
     self.scopes   = plist[@"IDECodeSnippetCompletionScopes"];
 }
 
-- (BOOL) persistChanges {
-    NSFileManager *fm = [NSFileManager defaultManager];
-    if (![fm fileExistsAtPath:self.fileURL.path])
-        [fm createFileAtPath:self.fileURL.path contents:nil attributes:nil];
-    return [[self propertyList] writeToFile:self.fileURL.path atomically:YES];
+- (BOOL)persistChanges {
+    if ([self validate]) {
+        NSFileManager *fm = [NSFileManager defaultManager];
+        if (![fm fileExistsAtPath:self.fileURL.path])
+            [fm createFileAtPath:self.fileURL.path contents:nil attributes:nil];
+        return [[self propertyList] writeToFile:self.fileURL.path atomically:YES];
+    }
+    return NO;
+}
+
+- (BOOL)validate {
+    return self.uuid && self.shortcut && self.contents;
 }
 
 - (NSDictionary *)propertyList {
@@ -75,7 +82,7 @@
     return properties;
 }
 
-+ (NSSet *) keyPathsForValuesAffectingUuid {
++ (NSSet *)keyPathsForValuesAffectingUuid {
     return [NSSet setWithObjects:@"title",@"platform",@"language",@"summary",@"contents",@"shortcut", nil];
 }
 

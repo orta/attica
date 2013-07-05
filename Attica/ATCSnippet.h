@@ -34,7 +34,8 @@
 @property (nonatomic, strong) NSArray *scopes;
 
 - (id)initWithPlistURL:(NSURL *) plistURL;
-- (void) updatePropertiesFromDictionary:(NSDictionary *)plist;
+- (void)updatePropertiesFromDictionary:(NSDictionary *)plist;
 - (NSDictionary *)propertyList;
-- (BOOL) persistChanges;
+- (BOOL)persistChanges;
+- (BOOL)validate;
 @end
