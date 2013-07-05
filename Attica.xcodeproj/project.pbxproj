@@ -82,7 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				8A84709B177C99FF00FF1513 /* Controllers */,
-				8A847093177C958300FF1513 /* Assets */,
 				8A84708F177C8F0200FF1513 /* Models */,
 				8A847084177C7FA300FF1513 /* Attica.h */,
 				8A847085177C7FA300FF1513 /* Attica.m */,
@@ -95,6 +94,7 @@
 		8A84707F177C7FA300FF1513 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8A847093177C958300FF1513 /* Assets */,
 				8A847080177C7FA300FF1513 /* Attica-Info.plist */,
 				8A847081177C7FA300FF1513 /* InfoPlist.strings */,
 				8A847087177C7FA300FF1513 /* Attica-Prefix.pch */,
@@ -325,6 +325,7 @@
 				8A84708C177C7FA300FF1513 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
