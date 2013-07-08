@@ -32,9 +32,16 @@
 @property (nonatomic, retain) NSPredicate *filterPredicate;
 @property (nonatomic, retain) NSArray *sortDescriptors;
 @property (strong) IBOutlet NSArrayController *arrayController;
+@property (strong) IBOutlet NSWindow *importWindow;
+@property (weak) IBOutlet NSTextField *importURLField;
 
 - (id)initWithBundle:(NSBundle *)bundle;
 - (IBAction)addSnippet:(id)sender;
 - (IBAction)deleteSelectedSnippet:(id)sender;
+- (IBAction)showActionMenu:(NSButton *)sender;
+- (IBAction)showImportDialog:(id)sender;
+- (IBAction)exportSnippets:(id)sender;
+- (IBAction)importSnippets:(NSButton *)sender;
+- (IBAction)closeImportDialog:(NSButton *)sender;
 
 @end

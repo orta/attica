@@ -6,3 +6,5 @@
     #import <Foundation/Foundation.h>
     #import <AppKit/AppKit.h>
 #endif
+
+#define DELETION_NOTIFICATION "me.delisa.Attica.snippet-deletion"

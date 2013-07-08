@@ -75,7 +75,7 @@ static NSString *SNIPPET_EXTENSION = @"codesnippet";
     if (![self isSnippetURL:url]) return;
 
     ATCSnippet *snippet = [self snippetByURL:url];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"me.delisa.Attica.snippet-deletion" object:snippet];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@DELETION_NOTIFICATION object:snippet];
     [self.snippets removeObject:snippet];
     completionHandler(nil);
 }

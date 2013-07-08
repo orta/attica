@@ -26,9 +26,6 @@
 static int SnippetKVOContext;
 static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR summary contains[cd] %@ OR shortcut contains[cd] %@)";
 
-@interface ATCWindowController()
-@end
-
 @implementation ATCWindowController
 
 - (id)initWithBundle:(NSBundle *)bundle {
@@ -39,7 +36,7 @@ static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR sum
         self.contentsFont = [NSFont fontWithName:@"Menlo" size:14];
         [self setWindow:[self mainWindowInBundle:bundle]];
         self.snippetManager = [[ATCSnippetManager alloc] init];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(snippetWillBeDeleted:) name:@"me.delisa.Attica.snippet-deletion" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(snippetWillBeDeleted:) name:@DELETION_NOTIFICATION object:nil];
     }
     return self;
 }
@@ -53,6 +50,30 @@ static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR sum
 - (IBAction)deleteSelectedSnippet:(id)sender {
     if ([self.snippetManager deleteSnippet:self.selectedSnippet])
         [self.arrayController removeObject:self.selectedSnippet];
+}
+
+- (IBAction)showActionMenu:(NSButton *)sender {
+    NSPoint origin = NSMakePoint(sender.bounds.origin.x, sender.bounds.size.height);
+    [sender.menu popUpMenuPositioningItem:nil atLocation:origin inView:sender];
+}
+
+- (IBAction)showImportDialog:(id)sender {
+    [[NSApplication sharedApplication] runModalForWindow:self.importWindow];
+}
+
+- (IBAction)exportSnippets:(id)sender {
+    // TODO: finish here
+}
+
+- (IBAction)importSnippets:(NSButton *)sender {
+    [[NSApplication sharedApplication] stopModal];
+    [sender.window close];
+    // TODO: finish here
+}
+
+- (IBAction)closeImportDialog:(NSButton *)sender {
+    [[NSApplication sharedApplication] stopModal];
+    [sender.window close];
 }
 
 - (void)setSelectedSnippet:(ATCSnippet *)selectedSnippet {
@@ -96,11 +117,11 @@ static NSString *const SEARCH_PREDICATE_FORMAT = @"(title contains[cd] %@ OR sum
 - (NSWindow *)mainWindowInBundle:(NSBundle *)bundle {
     NSArray *nibElements;
     [bundle loadNibNamed:@"MainWindow" owner:self topLevelObjects:&nibElements];
-    NSPredicate *windowPredicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [evaluatedObject class] == [NSWindow class];
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [evaluatedObject class] == [NSWindow class] && [[evaluatedObject identifier] isEqualToString:@"atticaMainWindow"];
     }];
 
-    return [nibElements filteredArrayUsingPredicate:windowPredicate][0];
+    return [nibElements filteredArrayUsingPredicate:predicate][0];
 }
 
 @end
